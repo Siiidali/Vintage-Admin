@@ -6,6 +6,11 @@ import { Request, Response } from 'express/';
 import { errorHandler } from './middlewares/errorHandler';
 require('dotenv').config();
 
+import productRoutes from './routes/productRoutes';
+import userRoutes from './routes/userRoutes';
+import orderRoutes from './routes/orderRoutes';
+import authRoutes from './routes/authRoutes';
+
 // PORT
 const PORT = process.env.PORT || 4000;
 
@@ -18,6 +23,10 @@ app.use(cookieParser());
 app.use(express.json());
 
 // Routes
+app.use('/api/products', productRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/users', userRoutes);
 
 // Handle not existing routes
 app.all('*', (req: Request, res: Response) => {
