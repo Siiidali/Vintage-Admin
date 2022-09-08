@@ -10,6 +10,12 @@ import productRoutes from './routes/productRoutes';
 import userRoutes from './routes/userRoutes';
 import orderRoutes from './routes/orderRoutes';
 import authRoutes from './routes/authRoutes';
+// import prisma from './utils/prismaClient';
+
+// const main = async () => {
+//   const orders = await prisma.order.deleteMany();
+//   const users = await prisma.user.deleteMany();
+// };
 
 // PORT
 const PORT = process.env.PORT || 4000;
@@ -38,3 +44,4 @@ app.use(errorHandler);
 
 // server start to listin to request
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// main();
