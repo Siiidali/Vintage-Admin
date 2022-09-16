@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const createNewUserSchema = z.object({
+export const createNewUserSchema = z.object({
   email: z
     .string({
       required_error: 'email is required',
@@ -37,7 +37,7 @@ const createNewUserSchema = z.object({
   }),
 });
 
-const updateUserSchema = z.object({
+export const updateUserSchema = z.object({
   id: z.string({
     required_error: 'id is required',
     invalid_type_error: 'id must be a string',

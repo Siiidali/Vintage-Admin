@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const createProductSchema = z.object({
+export const createProductSchema = z.object({
   id: z.string({
     required_error: 'id is required',
     invalid_type_error: 'id must be a string',
