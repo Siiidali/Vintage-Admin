@@ -11,8 +11,7 @@ router.get('/:id', verifyJWT, userControllers.getUser);
 router.post('/', validate(createNewUserSchema), userControllers.createUser);
 router.patch(
   '/',
-  verifyJWT,
-  validate(updateUserSchema),
+  [verifyJWT, validate(updateUserSchema)],
   userControllers.updateUser
 );
 router.delete('/:id', verifyJWT, userControllers.deleteUser);
