@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import userServices from '../services/userServices';
-import { createUserInput } from '../schemas/userSchema';
+import { createUserInput, updateUserInput } from '../schemas/userSchema';
 import { hashPassword } from '../utils/hashPassword';
 // @desc GetUser
 // @route GET /User
@@ -8,7 +8,7 @@ import { hashPassword } from '../utils/hashPassword';
 const getUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const user = userServices.findUserById(id);
+    const user = await userServices.findUserById(id);
 
     if (!user) {
       return res.status(400).json({ error: 'User not found' });
@@ -56,7 +56,7 @@ const createUser = async (
     // check duplicate :
     const userDuplicate = await userServices.findUserByEmail(email);
     if (userDuplicate) {
-      return res.status(400).json({ error: 'Email already in use' });
+      return res.status(409).json({ error: 'Email already in use' });
     }
 
     // hashing the password
@@ -85,12 +85,74 @@ const createUser = async (
 // @desc UpdateUser
 // @route PATCH/User
 // @access private
-const updateUser = async (req: Request, res: Response) => {};
+const updateUser = async (
+  req: Request<{}, {}, updateUserInput>,
+  res: Response
+) => {
+  const {
+    id,
+    email,
+    password,
+    firstName,
+    lastName,
+    phone,
+    country,
+    adresse,
+    postalCode,
+  } = req.body;
+
+  try {
+    const user = await userServices.findUserById(id);
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+    // check for duplicate emails:
+    const duplicate = await userServices.findUserByEmail(email);
+    if (duplicate && duplicate?.id !== id) {
+      return res.status(409).json({ message: 'Email already in use' });
+    }
+    const updateUserObject = {
+      email,
+      firstName,
+      lastName,
+      phone,
+      country,
+      adresse,
+      postalCode,
+    };
+    let updatedUser;
+    updatedUser = await userServices.updatingUser(email, updateUserObject);
+    if (password) {
+      updatedUser = await userServices.updatingUser(email, password);
+    }
+
+    res.json({ message: `${updatedUser.firstName} updated`, updatedUser });
+  } catch (error: any) {
+    return res.status(400).json({ error: error.message });
+  }
+};
 
 // @desc DeleteUser
 // @route DELETE /User
 // @access private
-const deleteUser = async (req: Request, res: Response) => {};
+const deleteUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    if (!id) {
+      return res.status(400).json({ message: 'User ID Required' });
+    }
+    const user = await userServices.findUserById(id);
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    const deleteUser = await userServices.deletingUser(id);
+    const reply = `Username ${deleteUser.firstName} with ID ${deleteUser.id} deleted`;
+    res.status(200).json(reply);
+  } catch (error: any) {
+    return res.status(400).json({ error: error.message });
+  }
+};
 
 export const userControllers = {
   getUser,

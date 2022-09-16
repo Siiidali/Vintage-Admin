@@ -46,3 +46,9 @@ model Order {
 
   @@id([userId, productId, createdAt])
 }
+
+model Admin {
+  id       String @id @default(uuid())
+  email    String
+  password String
+}

@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import { productControllers } from '../controllers/productControllers';
+import { verifyJWT } from '../middlewares/verifyJWT';
 
 const router = Router();
 
 router.get('/', productControllers.getProducts);
 router.get('/:id', productControllers.getProduct);
-router.post('/', productControllers.createProduct);
-router.patch('/', productControllers.updateProduct);
-router.delete('/', productControllers.deleteProduct);
+router.post('/', verifyJWT, productControllers.createProduct);
+router.patch('/', verifyJWT, productControllers.updateProduct);
+router.delete('/:id', verifyJWT, productControllers.deleteProduct);
 
 export default router;

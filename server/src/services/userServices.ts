@@ -1,4 +1,3 @@
-import { User } from '@prisma/client';
 import prisma from '../utils/prismaClient';
 
 const findUserById = async (id: string) => {
@@ -19,7 +18,24 @@ const createNewUser = async (user: any) => {
   });
 };
 
+const updatingUser = async (email: string, data: any) => {
+  const updateUser = await prisma.user.update({
+    where: { email },
+    data: data,
+  });
+  return updateUser;
+};
+
+const deletingUser = async (id: string) => {
+  const deletedUser = await prisma.user.delete({
+    where: { id },
+  });
+  return deletedUser;
+};
+
 const userServices = {
+  updatingUser,
+  deletingUser,
   findAllUsers,
   findUserById,
   createNewUser,
