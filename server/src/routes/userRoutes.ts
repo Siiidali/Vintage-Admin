@@ -6,14 +6,10 @@ import { createNewUserSchema, updateUserSchema } from '../schemas/userSchema';
 
 const router = Router();
 
-router.get('/', verifyJWT, userControllers.getUsers);
-router.get('/:id', verifyJWT, userControllers.getUser);
+router.get('/', userControllers.getUsers);
+router.get('/:id', userControllers.getUser);
 router.post('/', validate(createNewUserSchema), userControllers.createUser);
-router.patch(
-  '/',
-  [verifyJWT, validate(updateUserSchema)],
-  userControllers.updateUser
-);
-router.delete('/:id', verifyJWT, userControllers.deleteUser);
+router.patch('/', [validate(updateUserSchema)], userControllers.updateUser);
+router.delete('/:id', userControllers.deleteUser);
 
 export default router;

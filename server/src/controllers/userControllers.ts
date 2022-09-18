@@ -51,6 +51,7 @@ const createUser = async (
     adresse,
     postalCode,
   } = req.body;
+  console.log(req.body);
 
   try {
     // check duplicate :

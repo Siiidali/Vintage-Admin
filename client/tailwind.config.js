@@ -5,11 +5,14 @@ module.exports = {
     extend: {
       fontFamily: {
         hubballi: ['Hubballi', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
       },
-    },
-    colors: {
-      dash: '#9197B3',
-      white: '#fff',
+      colors: {
+        dash: '#9197B3',
+        white: '#fff',
+        primery: '#00ACA2ed',
+        back: '#FBFDFE',
+      },
     },
   },
   plugins: [],

@@ -34,9 +34,10 @@ const SideBar = () => {
     },
   ];
 
-  const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg m-2';
+  const normalLink =
+    'flex items-center justify-center md:justify-start md:pl-3 md:py-3 gap-5  py-2.5 rounded-lg mb-3';
   return (
-    <div className=" flex flex-col gap-1 w-24 sm:w-24 md:w-72 lg:w-72 h-screen py-9 px-3">
+    <div className=" flex flex-col gap-1 w-16 sm:w-24 md:w-72 lg:w-72 h-screen sticky top-0 py-9 px-3 border-r-2 border-gray-400 border-solid ">
       <div className="flex justify-center items-center">
         <h2 className="text-4xl font-hubballi font-medium invisible sm:invisible md:visible lg:visible mb-10 ">
           VINTAGE
